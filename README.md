@@ -10,6 +10,7 @@
 
 - **Backend**
   - [ ] Refactor _(Error handling, readability)_
+  - [ ] User settings _(Change email,password,job etc...)_
   - [ ] Post Functionality
   - [ ] Friends Functionality
   - [ ] Reset & Forgot password Functionality
