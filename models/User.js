@@ -2,33 +2,6 @@ const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
 const validator = require("validator");
 
-// const friendSchema = new mongoose.Schema({
-//     firstName: {
-//         type: String,
-//         required: [true,"Must provide first name"],
-//         maxlength: [50,"Maximum length of first name is 50 characters"]
-//     },
-//     lastName: {
-//         type: String,
-//         required: [true,"Must provide last name"],
-//         maxlength: [50,"Maximum length of last name is 50 characters"]
-//     },
-//     picturePath: {
-//         type: String,
-//         default: "",
-//     },
-//     location: {
-//         type: String,
-//         minlength: 3,
-//         default: "",
-//     },
-//     occupation: {
-//         type: String,
-//         minlength: 3,
-//         default: "",
-//     },
-// })
-
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -75,7 +48,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    verified: {
+    verificationDate: {
+        type: Date,
+        default: ""
+    },
+    isVerified: {
         type: Boolean,
         default: false
     },

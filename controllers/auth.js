@@ -1,5 +1,6 @@
-const { Error,createJWT,setCookie,removeCookie,sendVerificationEmail,createTokenUser } = require("../utils");
+const { Error,createJWT,setCookie,removeCookie,sendVerificationEmail,createTokenUser, setCookies } = require("../utils");
 const User = require("../models/User");
+const Token = require("../models/Token");
 const { StatusCodes } = require("http-status-codes");
 const crypto = require("crypto");
 
@@ -10,7 +11,7 @@ async function register(req,res) {
     const isFirstUser = await User.find({}).length === 0;
     const role = isFirstUser ? "admin" : "user"
 
-    const verificationToken = await crypto.randomBytes(16).toString("hex");
+    const verificationToken = await crypto.randomBytes(32).toString("hex");
     
     const createdUser = await User.create({firstName, lastName, email, password, picturePath, location, job, role, verificationToken});
     const tokenUser = createTokenUser(createdUser);
@@ -32,14 +33,40 @@ async function login(req,res) {
 
     const isValidPassword = await user.checkPassword(password);
     if(!isValidPassword) throw new Error(StatusCodes.UNAUTHORIZED,"Invalid password");
-    if(!user.verified) throw new Error(StatusCodes.UNAUTHORIZED,"Verify your email");
+    if(!user.isVerified) throw new Error(StatusCodes.UNAUTHORIZED,"Verify your email");
 
     const tokenUser = createTokenUser(user);
-    setCookie(res,{
-        name: "accessToken",
-        value: createJWT(tokenUser),
-        expireTime: 1000*60*5
-    })
+
+    let refreshToken = "";
+    const existingRefreshToken = await Token.findOne({user: user.id});
+
+    if(existingRefreshToken) {
+        if(existingRefreshToken.isValid) {
+            refreshToken = existingRefreshToken.refreshToken;
+        }
+    } else {
+        refreshToken = await crypto.randomBytes(40).toString("hex");
+        const userAgent = req.headers["user-agent"] || "-";
+        const ip = req.headers["ip"] || "-";
+
+        await Token.create({
+            user: user._id,
+            isValid: true,
+            refreshToken,
+            ip,
+            userAgent
+        })
+    }
+    
+    req.user = tokenUser;
+
+    console.log(req.user);
+
+    setCookies(res,
+        { name: "accessToken", value: createJWT({user: tokenUser}), expireTime: 1000*60*15 },
+        { name: "refreshToken", value: createJWT({user: tokenUser, refreshToken}), expireTime: 1000*60*60*24*60}
+    )
+
 
     res.status(StatusCodes.OK).json({
         msg: "OK",
@@ -48,9 +75,17 @@ async function login(req,res) {
 }
 
 async function logout(req,res) {
+    const {userId} = req.user;
+    if(!userId) throw new Error(StatusCodes.UNAUTHORIZED,"Invalid userId");
+
+    const searchedToken = await Token.findOneAndDelete({user: userId});
+    if(!searchedToken) throw new Error(StatusCodes.UNAUTHORIZED,"Token was not found");
+    
+    removeCookie(res,"refreshToken");
     removeCookie(res,"accessToken");
+
     res.status(StatusCodes.OK).json({
-        msg: "Log out && removed accessToken cookie"
+        msg: "User logged out"
     });
 }
 
@@ -63,18 +98,22 @@ async function verifyEmail(req,res) {
 
     if(verificationToken !== searchedUser.verificationToken) throw new Error(StatusCodes.UNAUTHORIZED,"Invalid token");
     
-    searchedUser.verified = true;
+    searchedUser.isVerified = true;
     searchedUser.verificationToken = "";
+    searchedUser.verificationDate = new Date(Date.now());
     await searchedUser.save();
 
     const tokenUser = createTokenUser(searchedUser);
 
-    setCookie(res,{
-        name: "accessToken",
-        value: createJWT(tokenUser),
-        expireTime: 1000*60*5
-    })
-    res.status(StatusCodes.OK).json({msg: `User with email ${email} was successfully verified`,user: tokenUser});
+    setCookies(res,
+        { name: "accessToken", value: createJWT({user: tokenUser}), expireTime: 1000*60*15 },
+        { name: "refreshToken", value: createJWT({user: tokenUser, refreshToken}), expireTime: 1000*60*60*24*60}
+    )
+
+    res.status(StatusCodes.OK).json({
+        msg: `User with email ${email} was successfully verified`,
+        user: tokenUser
+    });
 }
 
 module.exports = {

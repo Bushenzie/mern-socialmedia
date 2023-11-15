@@ -22,15 +22,17 @@ app.use(cookieParser(process.env.COOKIE_SECRET))
 app.use(fileUpload({
     limits: { fileSize: 30 * 1024 * 1024 }
 }))
-app.use(morgan("common"));
+app.use(morgan("tiny"));
 app.use(helmet());
 app.use(cors());
 
 //Routes
 const authRouter = require("./routes/auth");
 const uploadsRouter = require("./routes/uploads");
+const postsRouter = require("./routes/posts");
 app.use("/auth",authRouter)
 app.use("/upload",uploadsRouter)
+app.use("/posts",postsRouter)
 
 //Custom middlewares
 const errorHandler = require("./middleware/error-handler");
