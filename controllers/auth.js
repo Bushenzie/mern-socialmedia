@@ -1,4 +1,4 @@
-const { Error,createJWT,setCookie,removeCookie,sendVerificationEmail,createTokenUser, setCookies } = require("../utils");
+const { Error,createJWT,removeCookie,sendVerificationEmail,createTokenUser, setCookies } = require("../utils");
 const User = require("../models/User");
 const Token = require("../models/Token");
 const { StatusCodes } = require("http-status-codes");
@@ -8,8 +8,8 @@ async function register(req,res) {
     const { firstName,lastName,email,password,picturePath="",location="",job="" } = req.body;
     if(!firstName || !lastName || !email || !password) throw new Error(StatusCodes.BAD_REQUEST,"Missing credentials");
 
-    const isFirstUser = await User.find({}).length === 0;
-    const role = isFirstUser ? "admin" : "user"
+    const allUsers = await User.find({});
+    const role = allUsers.length === 0 ? "admin" : "user"
 
     const verificationToken = await crypto.randomBytes(32).toString("hex");
     
@@ -21,6 +21,7 @@ async function register(req,res) {
     res.status(StatusCodes.OK).json({
         msg: "Sent verification email!",
         user: tokenUser,
+        verificationToken
     });
 }
 
@@ -58,15 +59,12 @@ async function login(req,res) {
         })
     }
     
-    req.user = tokenUser;
-
-    console.log(req.user);
-
     setCookies(res,
         { name: "accessToken", value: createJWT({user: tokenUser}), expireTime: 1000*60*15 },
         { name: "refreshToken", value: createJWT({user: tokenUser, refreshToken}), expireTime: 1000*60*60*24*60}
     )
 
+    req.user = tokenUser;
 
     res.status(StatusCodes.OK).json({
         msg: "OK",
@@ -103,16 +101,8 @@ async function verifyEmail(req,res) {
     searchedUser.verificationDate = new Date(Date.now());
     await searchedUser.save();
 
-    const tokenUser = createTokenUser(searchedUser);
-
-    setCookies(res,
-        { name: "accessToken", value: createJWT({user: tokenUser}), expireTime: 1000*60*15 },
-        { name: "refreshToken", value: createJWT({user: tokenUser, refreshToken}), expireTime: 1000*60*60*24*60}
-    )
-
     res.status(StatusCodes.OK).json({
         msg: `User with email ${email} was successfully verified`,
-        user: tokenUser
     });
 }
 
