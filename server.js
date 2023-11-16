@@ -28,10 +28,12 @@ app.use(cors());
 
 //Routes
 const authRouter = require("./routes/auth");
+const usersRouter = require("./routes/users");
 const uploadsRouter = require("./routes/uploads");
 const postsRouter = require("./routes/posts");
 app.use("/auth",authRouter)
-app.use("/upload",uploadsRouter)
+app.use("/users",usersRouter)
+app.use("/uploads",uploadsRouter)
 app.use("/posts",postsRouter)
 
 //Custom middlewares
