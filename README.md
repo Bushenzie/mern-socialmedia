@@ -10,11 +10,14 @@
 
 - **Backend**
   - [ ] Refactor _(Error handling, readability)_
-  - [ ] User settings _(Change email,password,job etc...)_
-  - [ ] Post Functionality
+  - [x] User settings _(Change email,password,job etc...)_
+  - [x] Post Functionality
   - [ ] Friends Functionality
-  - [ ] Reset & Forgot password Functionality
+  - [ ] Comment Functionality
+  - [ ] Like Functionality
   - [ ] Chat Functionality
+  - [ ] Make queries for all controllers for better handling
+  - [ ] Reset & Forgot password Functionality
   - [ ] Admin dashboard
 - **Frontend**
   - [ ] Full frontend

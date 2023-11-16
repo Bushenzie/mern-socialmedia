@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const {getAllPosts} = require("../controllers/posts");
+const {getAllPosts,getSinglePost,createPost,updatePost,deletePost} = require("../controllers/posts");
 const authentication = require("../middleware/authentication");
 const authorizeRoles = require("../middleware/authorization");
 
-router.get("/",authentication,authorizeRoles("admin"),getAllPosts)
+router.get("/",authentication, getAllPosts)
+router.get("/:id",authentication, getSinglePost)
+router.post("/",authentication, createPost)
+router.patch("/:id",authentication, updatePost)
+router.delete("/:id",authentication, deletePost)
 
 
 module.exports = router;
