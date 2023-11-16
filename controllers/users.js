@@ -35,11 +35,34 @@ async function getSingleUser(req,res) {
 }
 
 async function updateUser(req,res) {
-    res.send("update user");
+    const {firstName, lastName, email, password, picturePath, location, job} = req.body;
+    const {id:userId} = req.params;
+    
+    const currentUser = req.user;
+    const searchedUser = await User.findById({_id:userId})
+    if(!searchedUser) throw new Error(StatusCodes.NOT_FOUND,"No user with this id was found");
+    checkPermissions(currentUser,searchedUser);
+
+    searchedUser.firstName = firstName || searchedUser.firstName;
+    searchedUser.lastName = lastName || searchedUser.lastName;
+    searchedUser.email = email || searchedUser.email;
+    searchedUser.password = password || searchedUser.password;
+    searchedUser.picturePath = picturePath || searchedUser.picturePath;
+    searchedUser.location = location || searchedUser.location;
+    searchedUser.job = job || searchedUser.job;
+
+    await searchedUser.validate();
+    await searchedUser.save();
+
+    res.status(StatusCodes.OK).json({
+        msg: "OK",
+        user: searchedUser
+    });
 }
 
 async function deleteUser(req,res) {
     const {id:userId} = req.params;
+
     const currentUser = req.user;
     const searchedUser = await User.findById({_id:userId})
     if(!searchedUser) throw new Error(StatusCodes.NOT_FOUND,"No user with this id was found");
