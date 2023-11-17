@@ -13,7 +13,7 @@
   - [x] User settings _(Change email,password,job etc...)_
   - [x] Post Functionality
   - [ ] Friends Functionality
-  - [ ] Comment Functionality
+  - [x] Comment Functionality
   - [ ] Like Functionality
   - [ ] Chat Functionality
   - [ ] Make queries for all controllers for better handling
