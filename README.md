@@ -9,16 +9,18 @@
 ### TODOs
 
 - **Backend**
-  - [ ] Refactor _(Error handling, readability)_
-  - [x] User settings _(Change email,password,job etc...)_
-  - [x] Post Functionality
-  - [ ] Friends Functionality
-  - [x] Comment Functionality
-  - [ ] Like Functionality
-  - [ ] Chat Functionality
-  - [ ] Make queries for all controllers for better handling
-  - [ ] Reset & Forgot password Functionality
-  - [ ] Admin dashboard
+  - High Priority:
+    - [x] User settings _(Change email,password,job etc...)_
+    - [x] Post Functionality
+    - [ ] Friends Functionality
+    - [x] Comment Functionality
+    - [ ] Like Functionality
+    - [ ] Chat Functionality
+    - [ ] Reset & Forgot password Functionality
+  - Must do after MVP:
+    - [ ] Refactor _(Error handling, readability)_
+    - [ ] Make queries for all controllers for better handling
+    - [ ] Admin dashboard
 - **Frontend**
   - [ ] Full frontend
     - [ ] Home/posts page

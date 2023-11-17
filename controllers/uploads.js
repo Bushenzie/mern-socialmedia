@@ -2,6 +2,9 @@ const { StatusCodes } = require("http-status-codes")
 const { Error } = require("../utils")
 const path = require("path");
 
+//TODOs
+//Add feature to add "voiceover" texts
+
 async function uploadImage(req,res) {
     let maxImageSize = (1024*1024)*30 //30MB
 

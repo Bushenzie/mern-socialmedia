@@ -4,6 +4,9 @@ const Token = require("../models/Token");
 const { StatusCodes } = require("http-status-codes");
 const crypto = require("crypto");
 
+//TODOs
+//Refactor + Reset & Forgot password
+
 async function register(req,res) {
     const { firstName,lastName,email,password,picturePath="",location="",job="" } = req.body;
     if(!firstName || !lastName || !email || !password) throw new Error(StatusCodes.BAD_REQUEST,"Missing credentials");

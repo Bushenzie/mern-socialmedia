@@ -4,6 +4,9 @@ const Token = require("../models/Token");
 const Post = require("../models/Post");
 const { Error, checkPermissions, removeCookie } = require("../utils");
 
+//TODO
+// Update User controller better handling + make it so you have to verify again email...
+
 async function getAllUsers(req,res) {
     const allUsers = await User.find({});
     if(!allUsers) throw new Error(StatusCodes.NOT_FOUND,"No users found");

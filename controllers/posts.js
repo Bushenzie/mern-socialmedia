@@ -2,6 +2,10 @@ const { StatusCodes } = require("http-status-codes");
 const { Error, checkPermissions } = require("../utils");
 const Post = require("../models/Post")
 
+//TODOs
+//Queries and pagination 
+//Tests + better updating
+//Like & Comment functionality /w visible users that liked the comment or like...
 
 async function getAllPosts(req,res) {
     //const { friendsOnly } = req.query;

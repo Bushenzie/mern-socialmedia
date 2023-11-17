@@ -2,6 +2,10 @@ const { StatusCodes } = require("http-status-codes");
 const Comment = require("../models/Comment");
 const { Error, checkPermissions } = require("../utils");
 
+//TODOs
+//Queries and pagination
+//Tests + better updating
+
 async function getAllComments(req,res) {
 
     const searchedComments = await Comment.find({});
