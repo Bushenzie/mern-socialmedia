@@ -1,9 +1,9 @@
 const { Error, checkPermissions } = require("../utils");
 const { StatusCodes } = require("http-status-codes");
-const User = require("../models/User");
-const FriendRequest = require("../models/FriendRequest");
+const { User, FriendRequest } = require("../models");
 
-//TODO - GetUsersFriendRequsts -> return all directed to him and all he sent!
+//TODO - refactor + better accept/decline handling
+//TODO - fully test it
 
 async function getAllFriendRequests(req,res) {
 
@@ -57,28 +57,28 @@ async function acceptFriendRequest(req,res) {
     const currentUser = req.user;
     const { id:friendReqId } = req.params;
 
-    const searchedRequest = await FriendRequest.findById({_id: friendReqId});
-    if(!searchedRequest) throw new Error(StatusCodes.NOT_FOUND,"No friend request with this id found")
+    const request = await FriendRequest.findById({_id: friendReqId});
+    if(!request) throw new Error(StatusCodes.NOT_FOUND,"No friend request with this id found")
+    if(request.status !== "pending") throw new Error(StatusCodes.BAD_REQUEST,"Request is not active")
 
-    const {from:sender,to:receiver} = searchedRequest;
+    const sender = await User.findById({_id: request.from});
+    const receiver = await User.findById({_id: request.to});
+    if(!sender || !receiver) throw new Error(StatusCodes.NOT_FOUND,"Invalid sender or receiver");
     checkPermissions(currentUser,receiver)
 
-    const senderUser = await User.findById({_id:sender});
-    const receiverUser = await User.findById({_id:receiver});
-    await senderUser.addFriend(receiverUser._id)
-    await receiverUser.addFriend(senderUser._id)
-
-    
-    // searchedRequest.status = "accepted";
-    // await searchedRequest.validate();
-    // await searchedRequest.save();
-    
-    await FriendRequest.findByIdAndDelete({_id: searchedRequest._id})
+    //if(sender.friends.includes(receiver._id) || receiver.friends.includes(sender._id)) throw new Error(StatusCodes.BAD_REQUEST,"Users already friends");
+    let updatedSender = await User.findOneAndUpdate({_id:sender._id},{ friends: [...sender.friends,receiver._id]},{new:true})
+    let updatedReceiver = await User.findOneAndUpdate({_id:receiver._id},{ friends: [...receiver.friends,sender._id]},{new:true})
+    request.status = "accepted";
+    await request.validate();
+    await request.save();
+    //await FriendRequest.findByIdAndDelete({_id: request._id})
 
     res.status(StatusCodes.OK).json({
         msg: "OK",
-        sender: senderUser,
-        receiver: receiverUser
+        sender: updatedSender,
+        receiver: updatedReceiver,
+        request
     })
 }
 
@@ -86,27 +86,20 @@ async function declineFriendRequest(req,res) {
     const currentUser = req.user;
     const { id:friendReqId } = req.params;
 
-    const searchedRequest = await FriendRequest.findById({_id: friendReqId});
-    if(!searchedRequest) throw new Error(StatusCodes.NOT_FOUND,"No friend request with this id found")
+    const request = await FriendRequest.findById({_id: friendReqId});
+    if(!request) throw new Error(StatusCodes.NOT_FOUND,"No friend request with this id found")
 
-    const {from:sender,to:receiver} = searchedRequest;
+    const {from:sender,to:receiver} = request;
     checkPermissions(currentUser,receiver)
 
-    const senderUser = await User.findById({_id:sender});
-    const receiverUser = await User.findById({_id:receiver});
-    await senderUser.removeFriend(receiverUser._id)
-    await receiverUser.removeFriend(senderUser._id)
-
-    // searchedRequest.status = "declined";
-    // await searchedRequest.validate();
-    // await searchedRequest.save();
-
-    await FriendRequest.findByIdAndDelete({_id: searchedRequest._id})
+    if(request.status !== "pending") throw new Error(StatusCodes.BAD_REQUEST,"Request is not active")
+    request.status = "declined";
+    await request.validate();
+    await request.save();
 
     res.status(StatusCodes.OK).json({
         msg: "OK",
-        sender: senderUser,
-        receiver: receiverUser
+        request
     })
 }   
 

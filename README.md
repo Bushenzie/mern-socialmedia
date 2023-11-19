@@ -12,8 +12,9 @@
   - High Priority:
     - [x] User settings _(Change email,password,job etc...)_
     - [x] Post Functionality
-    - [x] Friends BASE Functionality
-    - [ ] Friends Refactor Functionality
+    - [x] Friends Functionality
+    - [ ] Friends handling refactor
+    - [ ] Warning fix - module exports inside circular dependency
     - [x] Comment Functionality
     - [ ] Like Functionality _(I want to see ,who liked)_
     - [ ] Chat Functionality

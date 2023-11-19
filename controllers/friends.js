@@ -1,6 +1,6 @@
 const { Error, checkPermissions } = require("../utils");
 const { StatusCodes } = require("http-status-codes");
-const User = require("../models/User");
+const { User } = require("../models");
 
 //Friends Controllers
 async function getFriends(req,res) {
