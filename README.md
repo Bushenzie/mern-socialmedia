@@ -12,9 +12,10 @@
   - High Priority:
     - [x] User settings _(Change email,password,job etc...)_
     - [x] Post Functionality
-    - [ ] Friends Functionality
+    - [x] Friends BASE Functionality
+    - [ ] Friends Refactor Functionality
     - [x] Comment Functionality
-    - [ ] Like Functionality
+    - [ ] Like Functionality _(I want to see ,who liked)_
     - [ ] Chat Functionality
     - [ ] Reset & Forgot password Functionality
   - Must do after MVP:

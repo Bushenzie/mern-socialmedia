@@ -29,11 +29,15 @@ app.use(cors());
 //Routes
 const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
+const friendsRouter = require("./routes/friends");
+const friendsRequestsRouter = require("./routes/friendsRequests")
 const uploadsRouter = require("./routes/uploads");
 const postsRouter = require("./routes/posts");
 const commentsRouter = require("./routes/comments");
 app.use("/auth",authRouter)
 app.use("/users",usersRouter)
+app.use("/friends",friendsRouter)
+app.use("/friends/requests",friendsRequestsRouter)
 app.use("/uploads",uploadsRouter)
 app.use("/posts",postsRouter)
 app.use("/comments",commentsRouter)

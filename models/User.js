@@ -27,7 +27,6 @@ const userSchema = new mongoose.Schema({
     friends: {
         type: [mongoose.SchemaTypes.ObjectId],
         ref: "User",
-        minlength: 6,
         default: [],
         required: [true,"Must provide friends"]
     },
@@ -84,6 +83,19 @@ userSchema.pre("save",async function() {
 userSchema.methods.checkPassword = async function(passwordToCheck) {
     const isValid = await bcryptjs.compare(passwordToCheck,this.password);
     return isValid;
+}
+
+userSchema.methods.addFriend = async function(friendId) {
+    this.friends.push(friendId);
+    await this.validate();
+    await this.save();
+}
+
+userSchema.methods.removeFriend = async function(friendId) {
+    let filteredFriends = this.friends.filter(friend => friend.toString() !== friendId);
+    this.friends = filteredFriends;
+    await this.validate();
+    await this.save();
 }
 
 module.exports = mongoose.model("User",userSchema)
