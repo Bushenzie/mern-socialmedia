@@ -13,10 +13,9 @@
     - [x] User settings _(Change email,password,job etc...)_
     - [x] Post Functionality
     - [x] Friends Functionality
-    - [ ] Friends handling refactor
     - [x] Warning fix - module exports inside circular dependency
     - [x] Comment Functionality
-    - [ ] Like Functionality _(I want to see ,who liked)_
+    - [x] Like Functionality _(I want to see ,who liked)_
     - [ ] Chat Functionality
     - [ ] Reset & Forgot password Functionality
   - Must do after MVP:

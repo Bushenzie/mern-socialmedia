@@ -17,12 +17,15 @@ const commentSchema = new mongoose.Schema({
         maxlength: 300
     },
     likes: {
-        type: Number,
-        default: 0
+        type: [mongoose.SchemaTypes.ObjectId],
+        ref: "User",
+        default: []
     }
 },
 {
     timestamps:true
 })
+
+
 
 module.exports = mongoose.model("Comment",commentSchema);

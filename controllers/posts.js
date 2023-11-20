@@ -48,6 +48,34 @@ async function createPost(req,res) {
     })
 }
 
+async function addOrRemoveLikeToPost(req,res) {
+    const {id:postId} = req.params;
+    const {userId} = req.user;
+
+    const searchedPost = await Post.findById(postId).populate("likes");
+    if(!searchedPost) throw new Error(StatusCodes.NOT_FOUND,"Post with that id was not found")
+
+    const currentLikes = searchedPost.likes;
+    let updatedLikes = [];
+
+    const alreadyLiked = currentLikes.find(user => user._id.toString() === userId);
+    if(alreadyLiked) {
+        updatedLikes = currentLikes.filter(like => like._id.toString() !== userId)
+    } else {
+        updatedLikes = [...currentLikes,userId]
+    }
+
+    searchedPost.likes = updatedLikes;
+    await searchedPost.validate();
+    await searchedPost.save();
+
+    res.status(StatusCodes.OK).json({
+        msg: "OK",
+        likes: searchedPost.likes,
+        count: searchedPost.likes.length
+    })
+}
+
 async function updatePost(req,res) {
     const {description} = req.body;
     const {id:postId} = req.params;
@@ -90,6 +118,7 @@ module.exports = {
     getAllPosts,
     getSinglePost,
     createPost,
+    addOrRemoveLikeToPost,
     updatePost,
     deletePost
 }

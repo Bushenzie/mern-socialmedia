@@ -48,6 +48,34 @@ async function createComment(req,res) {
     })
 }
 
+async function addOrRemoveLikeToComment(req,res) {
+    const {id:commentId} = req.params;
+    const {userId} = req.user;
+
+    const searchedComment = await Comment.findById(commentId).populate("likes");
+    if(!searchedComment) throw new Error(StatusCodes.NOT_FOUND,"Comment with that id was not found")
+
+    const currentLikes = searchedComment.likes;
+    let updatedLikes = [];
+
+    const alreadyLiked = currentLikes.find(user => user._id.toString() === userId);
+    if(alreadyLiked) {
+        updatedLikes = currentLikes.filter(like => like._id.toString() !== userId)
+    } else {
+        updatedLikes = [...currentLikes,userId]
+    }
+
+    searchedComment.likes = updatedLikes;
+    await searchedComment.validate();
+    await searchedComment.save();
+
+    res.status(StatusCodes.OK).json({
+        msg: "OK",
+        likes: searchedComment.likes,
+        count: searchedComment.likes.length
+    })
+}
+
 async function updateComment(req,res) {
     const { id:commentId } = req.params
     const { value:changedValue } = req.body
@@ -89,6 +117,7 @@ module.exports = {
     getAllComments,
     getSingleComment,
     createComment,
+    addOrRemoveLikeToComment,
     updateComment,
     deleteComment
 }

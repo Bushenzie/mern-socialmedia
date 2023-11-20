@@ -34,4 +34,5 @@ postSchema.virtual("comments",{
     justOne: false
 })
 
+
 module.exports = mongoose.model("Post",postSchema)
