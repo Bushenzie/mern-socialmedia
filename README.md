@@ -14,7 +14,7 @@
     - [x] Post Functionality
     - [x] Friends Functionality
     - [ ] Friends handling refactor
-    - [ ] Warning fix - module exports inside circular dependency
+    - [x] Warning fix - module exports inside circular dependency
     - [x] Comment Functionality
     - [ ] Like Functionality _(I want to see ,who liked)_
     - [ ] Chat Functionality

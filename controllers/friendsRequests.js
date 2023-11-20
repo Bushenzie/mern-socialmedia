@@ -1,6 +1,7 @@
 const { Error, checkPermissions } = require("../utils");
 const { StatusCodes } = require("http-status-codes");
-const { User, FriendRequest } = require("../models");
+const User = require("../models/User");
+const FriendRequest = require("../models/FriendRequest");
 
 //TODO - refactor + better accept/decline handling
 //TODO - fully test it
@@ -66,7 +67,7 @@ async function acceptFriendRequest(req,res) {
     if(!sender || !receiver) throw new Error(StatusCodes.NOT_FOUND,"Invalid sender or receiver");
     checkPermissions(currentUser,receiver)
 
-    //if(sender.friends.includes(receiver._id) || receiver.friends.includes(sender._id)) throw new Error(StatusCodes.BAD_REQUEST,"Users already friends");
+    if(sender.friends.includes(receiver._id) && receiver.friends.includes(sender._id)) throw new Error(StatusCodes.BAD_REQUEST,"Users already friends");
     let updatedSender = await User.findOneAndUpdate({_id:sender._id},{ friends: [...sender.friends,receiver._id]},{new:true})
     let updatedReceiver = await User.findOneAndUpdate({_id:receiver._id},{ friends: [...receiver.friends,sender._id]},{new:true})
     request.status = "accepted";

@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const { Comment } = require("../models");
+const Comment = require("../models/Comment");
 const { Error, checkPermissions } = require("../utils");
 
 //TODOs

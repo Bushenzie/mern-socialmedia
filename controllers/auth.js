@@ -1,5 +1,6 @@
 const { Error,createJWT,removeCookie,sendVerificationEmail,createTokenUser, setCookies } = require("../utils");
-const { User,Token } = require("../models");
+const User = require("../models/User");
+const Token = require("../models/Token");
 const { StatusCodes } = require("http-status-codes");
 const crypto = require("crypto");
 

@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes")
 const { Error,getCookie, createJWT,verifyJWT, setCookies } = require("../utils")
-const { Token } = require("../models")
+const Token = require("../models/Token")
 
 async function authentication(req,res,next) {
     const accessToken = getCookie(req,"accessToken");

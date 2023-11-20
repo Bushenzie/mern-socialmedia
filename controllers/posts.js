@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const { Error, checkPermissions } = require("../utils");
-const { Post } = require("../models")
+const Post = require("../models/Post")
 
 //TODOs
 //Queries and pagination 

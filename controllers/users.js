@@ -1,5 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
-const { User,Token,Post } = require("../models");
+const User = require("../models/User");
+const Token = require("../models/Token");
+const Post = require("../models/Post");
 const { Error, checkPermissions, removeCookie } = require("../utils");
 
 //TODO
