@@ -10,6 +10,7 @@
 
 - **Backend**
   - High Priority:
+  - [ ] Make things delete themself by deleting "parent components" _(ex.: If you delete Post , delete all associated comments)_
   - [ ] Full refactors + Testing!
   - [ ] Chat Functionality
   - [ ] Reset & Forgot password Functionality
