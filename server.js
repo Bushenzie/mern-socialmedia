@@ -35,6 +35,8 @@ const friendsRequestsRouter = require("./routes/friendsRequests")
 const uploadsRouter = require("./routes/uploads");
 const postsRouter = require("./routes/posts");
 const commentsRouter = require("./routes/comments");
+const chatsRouter = require("./routes/chats");
+const messagesRouter = require("./routes/messages");
 app.use("/auth",authRouter)
 app.use("/users",usersRouter)
 app.use("/friends",friendsRouter)
@@ -42,6 +44,8 @@ app.use("/friends/requests",friendsRequestsRouter)
 app.use("/uploads",uploadsRouter)
 app.use("/posts",postsRouter)
 app.use("/comments",commentsRouter)
+app.use("/chats",chatsRouter)
+app.use("/messages",messagesRouter)
 
 //Custom middlewares
 const errorHandler = require("./middleware/error-handler");
