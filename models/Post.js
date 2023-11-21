@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Comment = require("./Comment");
 
 const postSchema = new mongoose.Schema({
     user: {
@@ -32,6 +33,11 @@ postSchema.virtual("comments",{
     localField: "_id",
     foreignField: "post",
     justOne: false
+})
+
+
+postSchema.pre("remove",async function() {
+    await Comment.deleteMany({ post: this._id })
 })
 
 

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
 const validator = require("validator");
-//Other Models - cant user desctructuring due to some "module exports inside circular dependency" warning
+
 const FriendRequest = require("./FriendRequest");
 const Post = require("./Post");
 const Comment = require("./Comment");
@@ -97,19 +97,6 @@ userSchema.pre("remove",async function() {
 userSchema.methods.checkPassword = async function(passwordToCheck) {
     const isValid = await bcryptjs.compare(passwordToCheck,this.password);
     return isValid;
-}
-
-userSchema.methods.addFriend = async function(friendId) {
-    this.friends.push(friendId);
-    await this.validate();
-    await this.save();
-}
-
-userSchema.methods.removeFriend = async function(friendId) {
-    let filteredFriends = this.friends.filter(friend => friend.toString() !== friendId);
-    this.friends = filteredFriends;
-    await this.validate();
-    await this.save();
 }
 
 module.exports = mongoose.model("User",userSchema)

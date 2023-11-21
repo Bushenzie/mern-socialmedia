@@ -13,6 +13,7 @@ const cookieParser = require("cookie-parser");
 //Variables
 const app = express();
 const PORT = process.env.PORT || 3000;
+const io = require("socket.io")
 
 //Middlewares
 app.use(express.json());
@@ -48,13 +49,13 @@ const notFound = require("./middleware/not-found-handler");
 app.use(errorHandler);
 app.use(notFound);
 
-
-start();
-async function start() {
+startServer();
+async function startServer() {
     try {
         await mongoose.connect(process.env.MONGODB_URL);
+        console.log("Connected to DB.");
         app.listen(PORT,() => {
-            console.log(`Successfully started the server on port ${PORT}.`);
+            console.log(`Started the server on port ${PORT}.`);
         })
     } catch(err) {
         throw new Error("Could not start the server");

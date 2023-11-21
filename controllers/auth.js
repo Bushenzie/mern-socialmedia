@@ -109,6 +109,7 @@ async function verifyEmail(req,res) {
     });
 }
 
+
 module.exports = {
     register,
     login,
