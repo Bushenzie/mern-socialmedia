@@ -14,6 +14,11 @@ const messageSchema = new mongoose.Schema({
     value: {
         type: String,
         required: [true,"Must provide message"],
+    },
+    edited: {
+        type: Boolean,
+        default: false,
+        required: true
     }
 },{
     timestamps: true
