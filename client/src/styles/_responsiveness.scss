@@ -1,0 +1,39 @@
+
+
+@mixin responsivity($device) {
+    @if $device ==xl-desktop {
+        @media (min-width: $d_desktop_xl) {
+            @content;
+        }
+    }
+
+    @else if $device ==l-desktop {
+        @media (max-width: $d_desktop_xl) and (min-width: $d_desktop_l) {
+            @content;
+        }
+    }
+
+    @else if $device ==m-desktop {
+        @media (max-width: $d_desktop_l) and (min-width: $d_desktop_m) {
+            @content;
+        }
+    }
+
+    @else if $device ==s-desktop {
+        @media (max-width: $d_desktop_m) and (min-width: $d_desktop_s) {
+            @content;
+        }
+    }
+
+    @else if $device ==tablet {
+        @media (max-width: $d_desktop_s) and (min-width: $d_tablet) {
+            @content;
+        }
+    }
+
+    @else if $device ==phone {
+        @media (max-width: $d_tablet) {
+            @content;
+        }
+    }
+}

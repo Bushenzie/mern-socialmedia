@@ -1,0 +1,45 @@
+@import "../../styles/main.scss";
+
+.landing-page {
+    .main {
+        background-color: $light-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 87.5vh;
+        background-color: shade-darken($light-color,5%);
+
+        .content {
+            display: grid;
+            justify-items: center;
+            align-items: center;
+            width: 75vw;
+            grid-template-columns: 50% 50%;
+            grid-template-rows: 1fr;
+            height: 100%;
+            margin: 0 10vw;
+
+            .right {
+                grid-column: 1 / 2;
+                grid-row: 1 / 2;
+                width: 100%;
+                display: flex;
+                align-items:flex-start;
+                flex-direction: column;
+                gap: 1vw;
+            }
+
+            .left {
+                grid-column: 2 / 3;
+                grid-row: 1 / 2;
+                width: 100%;
+
+                img {
+                    width: 50vw;
+                    object-fit: contain;
+                    object-position: center;
+                }
+            }
+        }
+    }
+}

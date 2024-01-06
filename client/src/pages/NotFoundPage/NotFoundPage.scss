@@ -1,0 +1,10 @@
+@import "../../styles/main.scss";
+
+.not-found-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: shade-darken($light-color, 5%);
+}

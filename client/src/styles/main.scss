@@ -1,0 +1,189 @@
+@import "./variables";
+@import "./functions";
+@import "./responsiveness";
+//Fonts
+@import url('https://fonts.googleapis.com/css2?family=Noticia+Text:wght@400;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+//Main reusable styles
+* {
+    margin: 0;
+    padding: 0;
+    color: $dark-color;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    border: 0;
+    font-size: 100%;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Work Sans', sans-serif;
+    line-height: 1.15;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 3.75rem;
+}
+
+h2 {
+    font-size: 3rem;
+}
+
+h3 {
+    font-size: 2.5rem;
+}
+
+h4 {
+    font-size: 2rem;
+}
+
+h5 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.2rem;
+}
+
+
+p,
+a,
+span {
+    font-size: 1rem;
+    line-height: 1.6;
+    font-family: 'Noticia Text', serif;
+}
+
+p.p1 {
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+
+p.p2 {
+    font-size: 1.3rem;
+    line-height: 1.4;
+}
+
+p.p3 {
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.btn {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    border-radius: 1.25rem;
+    padding: .65rem 1.25rem;
+    color: $light-color;
+    cursor: pointer;
+    transition: .3s all;
+
+    &.primary {
+        background-color: $primary-color;
+
+        &:hover {
+            background-color: shade-lighten($primary-color, 10%);
+        }
+    }
+
+    &.secondary {
+        background-color: $secondary-color;
+
+        &:hover {
+            background-color: shade-lighten($secondary-color, 10%);
+        }
+    }
+
+    &.transparent {
+        background-color: $light-color;
+        color: $secondary-color;
+        border: 1px solid $secondary-color;
+
+        &:hover {
+            background-color: $secondary-color;
+            color: $light-color;
+        }
+    }
+
+}
+
+.input-field {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    box-sizing: border-box;
+
+    .label {
+        font-family: 'Work Sans', sans-serif;
+        font-size: .8rem;
+        color: shade-darken($light-color,50%);
+        text-transform: uppercase;
+        position: absolute;
+        top: .2rem;
+        left: 2.25rem;
+
+        &:focus,
+        &:focus-visible,
+        &:focus-within {
+            color: $dark-color;
+        }
+    }
+
+    .input {
+        border: none;
+        border-radius: 1.25rem;
+        color: $dark-color;
+        caret-color: $dark-color;
+        background-color: shade-lighten($dark-color,85%);
+        width: 14rem;
+        padding: 1.25rem 2rem;
+        transition: .3s all;
+        font-size: .8rem;
+
+        
+        &:focus,
+        &:focus-visible,
+        &:focus-within {
+            outline: none;
+            background-color: shade-lighten($dark-color, 80%);
+        }
+
+    }
+}
+
+.form {
+    background-color: $light-color;
+    padding: 3rem;
+    border-radius: 1.25rem;
+
+    .form-error {
+        color: red;
+        font-weight: 600;
+    }
+}

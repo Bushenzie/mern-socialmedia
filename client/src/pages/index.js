@@ -1,10 +1,13 @@
-import ChatPage from "./ChatPage";
-import FeedPage from "./FeedPage";
-import FriendsPage from "./FriendsPage";
-import LandingPage from "./LandingPage";
-import LoginPage from "./LoginPage";
-import ProfilePage from "./ProfilePage";
-import RegisterPage from "./RegisterPage";
+import ChatPage from "./ChatPage/ChatPage";
+import FeedPage from "./FeedPage/FeedPage";
+import FriendsPage from "./FriendsPage/FriendsPage";
+import LandingPage from "./LandingPage/LandingPage";
+import LoginPage from "./LoginPage/LoginPage";
+import ProfilePage from "./ProfilePage/ProfilePage";
+import RegisterPage from "./RegisterPage/RegisterPage";
+import NotFoundPage from "./NotFoundPage/NotFoundPage";
+import SettingsPage from "./SettingsPage/SettingsPage";
+import UnloggedSharedLayout from "./shared/UnloggedSharedLayout";
 
 export {
     ChatPage,
@@ -13,5 +16,8 @@ export {
     LandingPage,
     LoginPage,
     ProfilePage,
-    RegisterPage
+    RegisterPage,
+    NotFoundPage,
+    SettingsPage,
+    UnloggedSharedLayout
 }

@@ -1,8 +1,29 @@
-# React + Vite
+# React frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### TODOs
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Unlogged
+  - [x] Landing Page
+  - [ ] Login Page
+    - [ ] Functionality
+    - [ ] Design
+  - [ ] Register Page
+    - [ ] Functionality
+    - [ ] Design
+- Logged
+  - [ ] Feed page
+    - [ ] Functionality
+    - [ ] Posting
+    - [ ] Design
+  - [ ] Profile page
+    - [ ] Functionality
+    - [ ] Design
+  - [ ] Friends page
+    - [ ] Functionality
+    - [ ] Design
+  - [ ] Chat page
+    - [ ] Functionality -> Socket.io connect
+    - [ ] Design
+  - [ ] Settings page
+    - [ ] Functionality
+    - [ ] Design

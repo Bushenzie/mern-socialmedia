@@ -1,0 +1,28 @@
+@import "../../styles/main.scss";
+
+.unlogged {
+    .nav {
+        display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 12.5vh;
+            padding: 0 2vw;
+            box-sizing: border-box;
+            border-bottom: 1px solid shade-darken($secondary-color,10%);
+            background-color: shade-lighten($light-color,10%);
+        
+            .left {
+                a {
+                    text-decoration: none;
+                }
+            }
+        
+            .right {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 1vw;
+            }
+    }
+}

@@ -1,0 +1,11 @@
+//Functions
+//from - css-tricks.com
+@function shade-lighten($color, $percentage) {
+    //lighten a color
+    @return mix(white, $color, $percentage);
+}
+
+@function shade-darken($color, $percentage) {
+    //darken a color
+    @return mix(black, $color, $percentage);
+}
